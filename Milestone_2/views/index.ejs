@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Document</title>
+  </head>
+   <header>
+    <img src="/images/black_white_games_logo.png" alt="Shop logo">
+  </header>
+
+  <nav class="navbar">
+    <a href="/">🏰 Home</a>
+    <a href="/cards">🃏 Cards</a>
+    <a href="/">📜 Sets</a>
+  </nav>
+  <body>
+    <main>
+      <h1>🌟 Cards in the spotlight 🌟</h1>
+      <div class ="cardsToBuy">
+        <% let i = 0; %>
+        <% spotlight.forEach(el => {
+            %> 
+            <div class="cardCon">
+              <h2><%= el.name %></h2>
+                <a href="/<%=el.id%>"><img src="<%= el.imagePath %>" alt="Card img"></a>
+                <div class="infoCon">
+                  <p>€<%= prices[i]%></p>
+                  <p class="condition <%= cardConditions[i].toLowerCase().replace(' ', '-') %>">
+                  <%= cardConditions[i] %>
+                  <% i++ %>
+                </div>
+            </div>
+       <% }); %>
+      </div>
+    </main>
+  </body>
+</html>

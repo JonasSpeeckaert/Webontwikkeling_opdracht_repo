@@ -1,0 +1,73 @@
+main {
+  text-align: center;
+}
+
+.cardsToBuy {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.cardCon {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.103);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cardCon:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(36, 36, 36, 0.197);
+}
+
+.cardCon img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.infoCon {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.condition {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+/* kaart kleur per conditie */
+.mint {
+  background-color: gold;
+  color: black;
+}
+
+.near-mint {
+  background-color: #b19702aa;
+  color: black;
+}
+
+.good {
+  background-color: #4caf50;
+  color: white;
+}
+
+.used {
+  background-color: #e53935;
+  color: white;
+}
