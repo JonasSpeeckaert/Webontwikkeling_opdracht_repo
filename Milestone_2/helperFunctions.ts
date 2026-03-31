@@ -1,4 +1,4 @@
-import { DeckObj } from "../Interfaces/index";
+import { DeckObj, SetObj } from "../Interfaces/index";
 import { randomInt } from "node:crypto";
 
 export function randomPrice(): number {
@@ -25,4 +25,34 @@ export function getSpotlight(deckData: DeckObj[]): {
   }
 
   return { spotlight, prices, cardConditions };
+}
+
+export async function fetchDeck(): Promise<any> {
+  let deckData: DeckObj[];
+  try {
+    const fetchDeck = await fetch(
+      "https://raw.githubusercontent.com/JonasSpeeckaert/Webontwikkeling_Milestones/main/deck.json",
+    );
+    deckData = await fetchDeck.json();
+    console.log("deckjson done");
+    return deckData;
+  } catch (err) {
+    console.log("Something went wrong while fetching the deckdata" + err);
+  }
+  return undefined;
+}
+
+export async function fetchSets(): Promise<any> {
+  let setData: SetObj[];
+  try {
+    const fetchSets = await fetch(
+      "https://raw.githubusercontent.com/JonasSpeeckaert/Webontwikkeling_Milestones/main/sets.json",
+    );
+    setData = await fetchSets.json();
+    console.log("setsjson done");
+    return setData;
+  } catch (err) {
+    console.log("Something went wrong while fetching the setdata" + err);
+  }
+  return undefined;
 }

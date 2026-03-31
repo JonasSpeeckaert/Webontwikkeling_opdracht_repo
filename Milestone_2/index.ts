@@ -2,7 +2,12 @@ import express from "express";
 import ejs from "ejs";
 import { DeckObj, SetObj } from "../Interfaces/index";
 import { randomInt } from "node:crypto";
-import { getSpotlight } from "./helperFunctions";
+import {
+  getSpotlight,
+  randomPrice,
+  fetchDeck,
+  fetchSets,
+} from "./helperFunctions";
 
 const app = express();
 
@@ -136,25 +141,11 @@ app.get("/sets/:id", (req, res) => {
 app.use((req, res) => {
   res.type("text/html");
   res.status(404);
-  res.send("<h1>Oeps er ging iets mis....</h1>");
+  res.render("404");
 });
 
 app.listen(app.get("port"), async () => {
   console.log("Server is listening on port: " + app.get("port"));
-  try {
-    const fetchDeck = await fetch(
-      "https://raw.githubusercontent.com/JonasSpeeckaert/Webontwikkeling_Milestones/main/deck.json",
-    );
-    deckData = await fetchDeck.json();
-    console.log("deckjson done");
-
-    const fetchSets = await fetch(
-      "https://raw.githubusercontent.com/JonasSpeeckaert/Webontwikkeling_Milestones/main/sets.json",
-    );
-
-    setData = await fetchSets.json();
-    console.log("setsjson done");
-  } catch (err) {
-    console.log("Something went wrong while fetching the data" + err);
-  }
+  deckData = await fetchDeck();
+  setData = await fetchSets();
 });
