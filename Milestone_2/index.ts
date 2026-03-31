@@ -2,6 +2,7 @@ import express from "express";
 import ejs from "ejs";
 import { DeckObj, SetObj } from "../Interfaces/index";
 import { randomInt } from "node:crypto";
+import { getSpotlight } from "./helperFunctions";
 
 const app = express();
 
@@ -14,17 +15,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  let spotlight: DeckObj[] = [];
-  let prices: number[] = [];
-  let conditions: string[] = ["mint", "near mint", "good", "used"];
-  let cardConditions: string[] = [];
-  for (let i = 0; i < 6; i++) {
-    let rnd: number = randomInt(deckData.length);
-    spotlight[i] = deckData[rnd];
-    rnd = randomInt(4);
-    cardConditions[i] = conditions[rnd];
-    prices[i] = randomPrice();
-  }
+  const { spotlight, prices, cardConditions } = getSpotlight(deckData);
   res.render("index", { spotlight, prices, cardConditions });
 });
 
@@ -75,7 +66,7 @@ app.get("/cards", (req, res) => {
   });
 });
 
-app.get("/:id", (req, res) => {
+app.get("/cards/:id", (req, res) => {
   let id = req.params.id;
   let foundCard = deckData.find((el) => el.id === id);
 
@@ -84,6 +75,62 @@ app.get("/:id", (req, res) => {
     return;
   }
   res.render("carddetails", { foundCard, deckData, setData });
+});
+
+app.get("/sets", (req, res) => {
+  const searchTerm: string =
+    typeof req.query.search === "string" ? req.query.search : "";
+  const sortCategory =
+    typeof req.query.sortCategory === "string"
+      ? req.query.sortCategory
+      : "name";
+  const sortDirection =
+    typeof req.query.sortDirection === "string"
+      ? req.query.sortDirection
+      : "asc";
+  const legalFilter =
+    typeof req.query.legalFilter === "string" ? req.query.legalFilter : "all";
+
+  let filteredSets = setData.filter((set) =>
+    set.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
+  if (legalFilter === "legal") {
+    filteredSets = filteredSets.filter((set) => set.isStandardLegal === true);
+  } else if (legalFilter === "notLegal") {
+    filteredSets = filteredSets.filter((set) => set.isStandardLegal === false);
+  }
+
+  let sortedSets = [...filteredSets].sort((a, b) => {
+    if (sortCategory === "releaseYear") {
+      return sortDirection === "asc"
+        ? a.releaseYear - b.releaseYear
+        : b.releaseYear - a.releaseYear;
+    } else {
+      return sortDirection === "asc"
+        ? a.name.localeCompare(b.name)
+        : b.name.localeCompare(a.name);
+    }
+  });
+
+  res.render("sets", {
+    setData: sortedSets,
+    sortDirection,
+    sortCategory,
+    search: searchTerm,
+    legalFilter,
+  });
+});
+
+app.get("/sets/:id", (req, res) => {
+  let id = req.params.id;
+  let foundSet = setData.find((el) => el.id === id);
+
+  if (!foundSet) {
+    res.status(404).send("<h1>Oeps er ging iets mis....</h1>");
+    return;
+  }
+  res.render("setdetails", { foundSet, deckData, setData });
 });
 
 app.use((req, res) => {
@@ -111,8 +158,3 @@ app.listen(app.get("port"), async () => {
     console.log("Something went wrong while fetching the data" + err);
   }
 });
-
-function randomPrice(): number {
-  const cents = Math.floor(Math.random() * 1000) + 1;
-  return cents / 100;
-}

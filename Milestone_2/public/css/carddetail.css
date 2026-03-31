@@ -96,7 +96,7 @@ footer {
   gap: 15px;
 }
 
-.setinfoCon img {
+.setinfoCon a img{
   max-width: 70px;
   max-height: 70px;
   border: 1px solid #c1ae74;
