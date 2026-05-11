@@ -1,0 +1,148 @@
+header {
+  background-color: #f4d151;
+}
+
+body {
+  background: #1c1c1c;
+}
+
+main {
+  background-color: #cfbd7d;
+  border: 6px solid #1c1c1c;
+  border-radius: 16px;
+  padding: 20px;
+  width: 92vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.topcardCon {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 25px;
+  margin-left: 20px;
+  padding-right: 15px;
+  padding-left: 5px;
+  background-color: rgb(237, 197, 98);
+  border: 3px #1c1c1c solid;
+  border-radius: 20px;
+}
+
+.topcardCon h2 {
+  border: 2px solid black;
+  background-color: rgb(156, 155, 155);
+  border-radius: 50%;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: bolder;
+  margin: 0;
+}
+
+.imageCon img {
+  width: 100%;
+  max-width: 450px;
+  border: 4px solid #b7994c;
+  border-radius: 8px;
+}
+
+.middlecardCon {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+#cardDescription {
+  text-align: left;
+  padding: 10px;
+  width: 100%;
+  min-height: 120px;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  border: 2px solid #c1ae74;
+  border-radius: 4px;
+  background: #f1e9cb;
+}
+
+footer {
+  width: 92vw;
+}
+
+.bottomcardCon {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  width: 100%;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.setinfoCon {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.setinfoCon a img {
+  max-width: 70px;
+  max-height: 70px;
+  border: 1px solid #c1ae74;
+  border-radius: 4px;
+}
+
+.common {
+  color: #e0e0e0;
+}
+
+.uncommon {
+  color: #4caf50;
+}
+
+.rare {
+  color: #2196f3;
+}
+
+.mythic {
+  color: rgb(164, 1, 201);
+}
+
+.legendary {
+  color: rgb(223, 135, 3);
+}
+
+.editCon {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.editBtn {
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 2px solid #b7994c;
+  background-color: rgb(237, 197, 98);
+  color: #1c1c1c;
+  font-weight: bold;
+  font-size: 1em;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.editBtn:hover {
+  background-color: #d4a800;
+}

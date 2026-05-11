@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/cardslist.css">
+    <title>Document</title>
+  </head>
+  <%- include("partials/header") %>
+  <%- include("partials/nav") %>
+  <body>
+    <main>
+      <div class="topCon">
+        <form action="/cards" method="get">
+          <div class="searchItem">  
+            <label for="search"></label>
+            <input type="text" id="search" name="search" value="<%= search %>" placeholder="🔍 Search cards..." class="searchBar">
+            <button type="submit">Search</button>
+          </div>
+          <div class="sortItem">
+            <select class="sortBar" name="sortCategory">
+              <option value="name" <%= sortCategory === "name" ? "selected" : "" %>>Name</option>
+              <option value="manaValue" <%= sortCategory === "manaValue" ? "selected" : "" %>>Mana Value</option>
+              <option value="rarity" <%= sortCategory === "rarity" ? "selected" : "" %>>Rarity</option>
+              <option value="set" <%= sortCategory === "set" ? "selected" : "" %>>Card Set</option>
+            </select>
+            <select class="sortBar" name="sortDirection">
+              <option value="asc" <%= sortDirection === "asc" ? "selected" : "" %>>Ascending</option>
+              <option value="desc" <%= sortDirection === "desc" ? "selected" : "" %>>Descending</option>
+            </select>
+            <button type="submit">Sort</button>
+          </div>   
+        </form>
+      </div>
+
+      <div class="cardGrid">
+        <% deckData.forEach(el => { %> 
+          <div class="cardItem">
+            <div class="cardContent">
+              <h2 class="cardTitle"><%= el.name %></h2>
+              <a href="/cards/<%=el.id%>"><img src="<%= el.imagePath %>" alt="Card img"></a>
+              <div class="cardMeta">
+                <p class="type"><%= el.types %></p>
+                <p class="mana"><%= el.manaValue %></p>
+              </div>
+              <p class="rarity <%= el.rarity.toLowerCase() %>"><%= el.rarity %></p>
+              <p class="description"><%= el.description %></p>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/carddetail.css" />
+    <title>Document</title>
+  </head>
+  <%- include("partials/header") %>
+  <%- include("partials/nav") %>
+  <body>
+    <main>
+      <div class="topcardCon">
+        <h1><%= foundCard.name %></h1>
+        <h2><%= foundCard.manaValue %></h2>
+      </div>
+      <div class="imageCon"> 
+        <img src="<%= foundCard.imagePath %>" alt="<%=foundCard.name%> image">
+      </div>
+      <div class="middlecardCon">
+        <h3><% foundCard.types.forEach(el => { %>
+          <%= el %>
+        <% });%></h3>
+        <p class="<%= foundCard.rarity.toLowerCase() %>"><%= foundCard.rarity %></p>
+      </div>
+      <div id="cardDescription">   
+        <p><%= foundCard.description %></p>
+      </div>
+      <div class="editCon">
+        <a href="/cards/<%= foundCard.id %>/update" class="editBtn">✏️ Edit Card</a>
+      </div>
+    </main>
+    <footer>
+      <div class="bottomcardCon">
+        <p><%= foundCard.releaseDate %></p>
+        <div class="setinfoCon">
+          <p><%= foundCard.cardSet.name %></p>
+          <a href="/sets/<%=foundCard.cardSet.id%>"><img src="<%= foundCard.cardSet.logoUrl %>" alt="<%= foundCard.cardSet.name %> logo"></a>
+          <p><%= foundCard.cardSet.releaseYear %></p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/setslist.css" />
+    <title>Sets</title>
+  </head>
+  <%- include("partials/header") %>
+  <%- include("partials/nav") %>
+  <body>
+    <main>
+      <div class="topCon">
+        <form action="/sets" method="get">
+          <div class="searchItem">
+            <label for="search"></label>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              value="<%= search %>"
+              placeholder="🔍 Search sets..."
+              class="searchBar"
+            />
+            <button type="submit">Search</button>
+          </div>
+          <div class="sortItem">
+            <select class="sortBar" name="sortCategory">
+              <option value="name" <%= sortCategory === "name" ? "selected" : "" %>>Name</option>
+              <option value="releaseYear" <%= sortCategory === "releaseYear" ? "selected" : "" %>>Release Year</option>
+            </select>
+            <select class="sortBar" name="sortDirection">
+              <option value="asc" <%= sortDirection === "asc" ? "selected" : "" %>>Ascending</option>
+              <option value="desc" <%= sortDirection === "desc" ? "selected" : "" %>>Descending</option>
+            </select>
+            <select class="sortBar" name="legalFilter">
+              <option value="all" <%= legalFilter === "all" ? "selected" : "" %>>All sets</option>
+              <option value="legal" <%= legalFilter === "legal" ? "selected" : "" %>>Standard Legal</option>
+              <option value="notLegal" <%= legalFilter === "notLegal" ? "selected" : "" %>>Not Standard Legal</option>
+            </select>
+            <button type="submit">Filter</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="setGrid">
+        <% setData.forEach(set => { %>
+          <div class="setItem set-<%= set.code.toLowerCase() %>">
+            <a href="/sets/<%= set.id %>">
+              <img src="<%= set.logoUrl %>" alt="<%= set.name %> logo" />
+            </a>
+            <div class="setContent">
+              <h2 class="setTitle"><%= set.name %></h2>
+              <div class="setMeta">
+                <p class="setCode"><%= set.code %></p>
+                <p class="setYear"><%= set.releaseYear %></p>
+              </div>
+              <p class="legalBadge <%= set.isStandardLegal ? 'legal' : 'notLegal' %>">
+                <%= set.isStandardLegal ? "Standard Legal" : "Not Standard Legal" %>
+              </p>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </main>
+  </body>
+</html>
