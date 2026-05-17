@@ -2,18 +2,13 @@ import express from "express";
 import ejs from "ejs";
 import { DeckObj, SetObj } from "../Interfaces/index";
 import { getSpotlight } from "./helperFunctions";
-import {
-  connect,
-  getDecks,
-  getSets
-} from "./database";
+import { connect, getDecks, getSets } from "./database";
 import session from "./session";
-import { secureMiddleware } from "./secureMiddelware";
-import { loginRouter } from "./routes/loginRouter";
-import { cardRouter } from "./routes/cardRouter";
-import { setRouter } from "./routes/setRouter";
-import { flashMiddleware } from "./flashMiddelware";
-
+import { secureMiddleware } from "./middleware/secureMiddleware";
+import { loginRouter } from "./routers/loginRouter";
+import { cardRouter } from "./routers/cardRouter";
+import { setRouter } from "./routers/setRouter";
+import { flashMiddleware } from "./middleware/flashMiddleware";
 
 const app = express();
 
@@ -33,7 +28,6 @@ app.use((req, res, next) => {
   next();
 }); //checkt of gebruiker aangemeld is om dan de locals.user de user te geven die in de session zit. zo wordt de dashboard link toegevoegd op andere paginas en niet enkel op de dashboard pagina
 
-
 app.use(flashMiddleware);
 app.use(loginRouter());
 app.use(cardRouter());
@@ -43,7 +37,6 @@ app.get("/", (req, res) => {
   const { spotlight, prices, cardConditions } = getSpotlight(deckData);
   res.render("index", { spotlight, prices, cardConditions });
 });
-
 
 app.use((req, res) => {
   res.type("text/html");

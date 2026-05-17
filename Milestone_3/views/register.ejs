@@ -4,25 +4,27 @@
    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="stylesheet" href="/css/register.css" />
     <title>Register</title>
   </head>
   <%- include("partials/header") %>
   <%- include("partials/nav") %>
   <body>
-    <form action="/register" method="POST">
-        <div>
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username"/>
-        </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password"/>
-        </div>
-        <button type="submit">Create User</button>
-      </form>
-       <% if (locals.message) { %>
-        <p class="<%= message.type %>"><%= message.message %></p>
-      <% } %>
+    <div class="registerCon">
+      <form action="/register" method="POST">
+          <div class="formCon">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username"/>
+          </div>
+          <div class="formCon">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"/>
+          </div>
+          <button class="btnCon" type="submit">Create User</button>
+        </form>
+        <% if (locals.message) { %>
+          <p class="<%= message.type %>"><%= message.message %></p>
+        <% } %>
+      </div>
   </body>
 </html>

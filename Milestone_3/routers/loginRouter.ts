@@ -1,13 +1,16 @@
 import express from "express";
-import { secureMiddleware } from "../secureMiddelware";
+import { secureMiddleware } from "../middleware/secureMiddleware";
 import { DeckObj, User } from "../../Interfaces";
 import { login, getDecks, createUser } from "../database";
-import { flashMiddleware } from "../flashMiddelware";
+import { flashMiddleware } from "../middleware/flashMiddleware";
 
 export function loginRouter() {
   const router = express.Router();
 
   router.get("/login", (req, res) => {
+    if (req.session.user) {
+      return res.redirect("/dashboard");
+    }
     res.render("login");
   });
 
