@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <title>Dashboard</title>
+  </head>
+  <%- include("partials/header") %>
+  <%- include("partials/nav") %>
+  <body>
+    <div class="topInfoCon">
+      <h2>
+        <%= user.username %>
+        <span class="role"><%= user.role %></span>
+      </h2>
+      <form action="/logout" method="post">
+        <button type="submit" class="logoutBtn">Uitloggen</button>
+      </form>
+    </div>
+
+    <div class="cardGrid">
+      <% deckData.forEach(el => { %>
+        <div class="cardItem">
+          <div class="cardContent">
+            <h2 class="cardTitle"><%= el.name %></h2>
+            <a href="/cards/<%=el.id%>"><img src="<%= el.imagePath %>" alt="Card img"></a>
+            <div class="cardMeta">
+              <p class="type"><%= el.types %></p>
+              <p class="mana"><%= el.manaValue %></p>
+            </div>
+            <p class="rarity <%= el.rarity.toLowerCase() %>"><%= el.rarity %></p>
+            <p class="description"><%= el.description %></p>
+          </div>
+        
+        <% if (user.role !== "USER") { %>
+          <div class="editCon">
+            <a href="/cards/<%= el.id %>/update" class="editBtn">✏️ Edit Card</a>
+          </div>
+        <% } %>
+        </div>
+      <% }); %>
+    </div>
+  </body>
+</html>

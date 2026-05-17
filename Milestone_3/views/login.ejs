@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <title>Login</title>
+  </head>
+  <%- include("partials/header") %>
+  <%- include("partials/nav") %>
+  <body>
+    <div class="loginCon">
+      <h2>Inloggen</h2>
+
+      <form action="/login" method="post">
+        <div class="formCon">
+          <label for="username">Gebruikersnaam</label>
+          <input id="username" name="username" />
+        </div>
+        <div class="formCon">
+          <label for="password">Wachtwoord</label>
+          <input type="password" id="password" name="password" />
+        </div>
+        <div class="btnCon">
+          <button type="submit" class="loginBtn">Inloggen</button>
+          <div class="editCon">
+            <a href="/register" class="registerBtn">Register</a>
+          </div>
+        </div>
+      </form>
+
+      <% if (locals.message) { %>
+        <p class="<%= message.type %>"><%= message.message %></p>
+      <% } %>
+    </div>
+  </body>
+</html>

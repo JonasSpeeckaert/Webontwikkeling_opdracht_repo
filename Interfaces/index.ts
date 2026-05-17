@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface SetObj {
   id: string;
   name: string;
@@ -19,4 +21,16 @@ export interface DeckObj {
   rarity: string;
   types: string[];
   cardSet: SetObj;
+}
+
+export interface User {
+  _id?: ObjectId;
+  username: string;
+  password?: string;
+  role: "ADMIN" | "USER";
+}
+
+export interface FlashMessage {
+    type: "error" | "success"
+    message: string;
 }

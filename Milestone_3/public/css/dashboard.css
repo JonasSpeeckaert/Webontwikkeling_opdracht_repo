@@ -1,0 +1,152 @@
+
+.topInfoCon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f3f0e8;
+  border: 4px solid #1c1c1c;
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  width: 92vw;
+  margin-bottom: 20px;
+}
+
+.topInfoCon h2 {
+  font-family: "Georgia", serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.role {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background-color: #f1e9cb;
+  border: 2px solid #1c1c1c;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.logoutBtn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 2px solid #1c1c1c;
+  background-color: #f1e9cb;
+  font-family: "Georgia", serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logoutBtn:hover { background-color: #e2d9b0; }
+
+.editCon {
+  display: flex;
+  justify-content: center;
+  margin-top: -12px;
+  margin-bottom: 8px;
+}
+
+.editBtn {
+  font-family: "Georgia", serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1c1c1c;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 2px solid #1c1c1c;
+  background-color: #f1e9cb;
+}
+
+.editBtn:hover { background-color: #e2d9b0; }
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.cardItem {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.095);
+  transition: 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardItem:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.188);
+}
+
+.cardItem img {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+}
+
+.cardContent {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cardTitle {
+  font-size: 18px;
+  margin: 0;
+}
+
+.cardMeta {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardMeta p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.description {
+  font-size: 13px;
+  color: #444;
+}
+
+.rarity {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+  width: fit-content;
+  font-size: 13px;
+}
+
+.common {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.uncommon {
+  background: #4caf50;
+  color: white;
+}
+
+.rare {
+  background: #2196f3;
+  color: white;
+}
+
+.mythic {
+  background: rgb(164, 1, 201);
+  color: white;
+}
+
+.legendary {
+  background: rgb(223, 135, 3);
+  color: white;
+}

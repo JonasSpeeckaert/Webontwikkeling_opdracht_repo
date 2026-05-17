@@ -1,15 +1,19 @@
 import express from "express";
 import ejs from "ejs";
 import { DeckObj, SetObj } from "../Interfaces/index";
-import { randomInt } from "node:crypto";
-import { getSpotlight, randomPrice } from "./helperFunctions";
+import { getSpotlight } from "./helperFunctions";
 import {
   connect,
-  getCardById,
   getDecks,
-  getSets,
-  updateCard,
+  getSets
 } from "./database";
+import session from "./session";
+import { secureMiddleware } from "./secureMiddelware";
+import { loginRouter } from "./routes/loginRouter";
+import { cardRouter } from "./routes/cardRouter";
+import { setRouter } from "./routes/setRouter";
+import { flashMiddleware } from "./flashMiddelware";
+
 
 const app = express();
 
@@ -22,139 +26,24 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+app.use(session);
+
+app.use((req, res, next) => {
+  res.locals.user = req.session.user ?? null;
+  next();
+}); //checkt of gebruiker aangemeld is om dan de locals.user de user te geven die in de session zit. zo wordt de dashboard link toegevoegd op andere paginas en niet enkel op de dashboard pagina
+
+
+app.use(flashMiddleware);
+app.use(loginRouter());
+app.use(cardRouter());
+app.use(setRouter());
+
 app.get("/", (req, res) => {
   const { spotlight, prices, cardConditions } = getSpotlight(deckData);
   res.render("index", { spotlight, prices, cardConditions });
 });
 
-app.get("/cards", (req, res) => {
-  const searchTerm: string =
-    typeof req.query.search === "string" ? req.query.search : "";
-  const sortCategory =
-    typeof req.query.sortCategory === "string"
-      ? req.query.sortCategory
-      : "name";
-  const sortDirection =
-    typeof req.query.sortDirection === "string"
-      ? req.query.sortDirection
-      : "asc";
-  let filteredCards = deckData.filter((card) =>
-    card.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
-
-  const rarityOrder = ["common", "uncommon", "rare", "mythic", "legendary"];
-
-  let sortedCards = [...filteredCards].sort((a, b) => {
-    if (sortCategory === "name") {
-      return sortDirection === "asc"
-        ? a.name.localeCompare(b.name)
-        : b.name.localeCompare(a.name);
-    } else if (sortCategory === "manaValue") {
-      return sortDirection === "asc"
-        ? a.manaValue - b.manaValue
-        : b.manaValue - a.manaValue;
-    } else if (sortCategory === "rarity") {
-      const aRarity = rarityOrder.indexOf(a.rarity.toLowerCase());
-      const bRarity = rarityOrder.indexOf(b.rarity.toLowerCase());
-      return sortDirection === "asc" ? aRarity - bRarity : bRarity - aRarity;
-    } else if (sortCategory === "set") {
-      return sortDirection === "asc"
-        ? a.name.localeCompare(b.cardSet.name)
-        : b.name.localeCompare(a.cardSet.name);
-    } else {
-      return 0;
-    }
-  });
-
-  res.render("cards", {
-    deckData: sortedCards,
-    sortDirection: sortDirection,
-    sortCategory: sortCategory,
-    search: searchTerm,
-  });
-});
-
-app.get("/cards/:id", async (req, res) => {
-  let id = req.params.id;
-  let foundCard = await getCardById(id);;
-
-  if (!foundCard) {
-    res.status(404).send("<h1>Oeps er ging iets mis....</h1>");
-    return;
-  }
-  res.render("carddetails", { foundCard, deckData, setData });
-});
-
-app.get("/cards/:id/update", async (req, res) => {
-  let id: string = req.params.id;
-  let card: DeckObj | null = await getCardById(id);
-  res.render("update", {
-    card: card,
-  });
-});
-
-app.post("/cards/:id/update", async (req, res) => {
-  let id: string = req.params.id;
-  let card: DeckObj = req.body;
-  await updateCard(id, card);
-  res.redirect(`/cards/${id}`);
-});
-
-app.get("/sets", (req, res) => {
-  const searchTerm: string =
-    typeof req.query.search === "string" ? req.query.search : "";
-  const sortCategory =
-    typeof req.query.sortCategory === "string"
-      ? req.query.sortCategory
-      : "name";
-  const sortDirection =
-    typeof req.query.sortDirection === "string"
-      ? req.query.sortDirection
-      : "asc";
-  const legalFilter =
-    typeof req.query.legalFilter === "string" ? req.query.legalFilter : "all";
-
-  let filteredSets = setData.filter((set) =>
-    set.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
-
-  if (legalFilter === "legal") {
-    filteredSets = filteredSets.filter((set) => set.isStandardLegal === true);
-  } else if (legalFilter === "notLegal") {
-    filteredSets = filteredSets.filter((set) => set.isStandardLegal === false);
-  }
-
-  let sortedSets = [...filteredSets].sort((a, b) => {
-    if (sortCategory === "releaseYear") {
-      return sortDirection === "asc"
-        ? a.releaseYear - b.releaseYear
-        : b.releaseYear - a.releaseYear;
-    } else {
-      return sortDirection === "asc"
-        ? a.name.localeCompare(b.name)
-        : b.name.localeCompare(a.name);
-    }
-  });
-
-  res.render("sets", {
-    setData: sortedSets,
-    sortDirection,
-    sortCategory,
-    search: searchTerm,
-    legalFilter,
-  });
-});
-
-app.get("/sets/:id", (req, res) => {
-  let id = req.params.id;
-  let foundSet = setData.find((el) => el.id === id);
-
-  if (!foundSet) {
-    res.status(404).send("<h1>Oeps er ging iets mis....</h1>");
-    return;
-  }
-  res.render("setdetails", { foundSet, deckData, setData });
-});
 
 app.use((req, res) => {
   res.type("text/html");

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/carddetail.css" />
-    <title>Document</title>
+    <title><%= foundCard.name %></title>
   </head>
   <%- include("partials/header") %>
   <%- include("partials/nav") %>
@@ -28,7 +28,10 @@
         <p><%= foundCard.description %></p>
       </div>
       <div class="editCon">
+       <% if(locals.user && locals.user.role === "ADMIN"){%>   <!-- eerst checken of locals.user bestaat en dan pas role checken, niet enkel role checken want als je niet ingelogd bent dan is dat null en geeft die een ERROR -->
+          <!-- ik zou eigenlijk een middelware moeten schrijven zoals de secureMiddelware die wanneer je rechtstreeks naar card/:id/update surft je zo niet op de pagina geraakt want nu gebeurt er geen check of je wel een admin -->
         <a href="/cards/<%= foundCard.id %>/update" class="editBtn">✏️ Edit Card</a>
+        <%}%>
       </div>
     </main>
     <footer>
