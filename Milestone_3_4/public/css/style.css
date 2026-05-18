@@ -48,3 +48,76 @@ header img {
   color: #5a3d00;
   transform: scale(1.05);
 }
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 8px;
+  }
+
+  .navbar a {
+    font-size: 15px;
+  }
+
+  .cardGrid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .setGrid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .cardsToBuy {
+    grid-template-columns: 1fr;
+  }
+
+  form {
+    width: 90%;
+  }
+
+  .sortItem {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .sortBar {
+    width: 100%;
+  }
+
+  .searchBar {
+    width: 100%;
+  }
+
+  .topInfoCon {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .setGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    /* overflow-x: auto; */
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+
+  .loginCon,
+  .registerCon {
+    width: 95vw;
+    padding: 1.5rem;
+  }
+}
