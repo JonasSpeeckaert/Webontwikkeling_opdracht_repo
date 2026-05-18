@@ -196,3 +196,15 @@ footer {
   color: #c0392b;
   font-weight: bold;
 }
+
+@media screen and (max-width: 768px) {
+  main {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  main {
+    justify-content: center;
+  }
+}
