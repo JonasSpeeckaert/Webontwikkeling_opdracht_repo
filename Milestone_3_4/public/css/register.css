@@ -43,7 +43,7 @@
 
 .btnCon {
   width: 100%;
-    padding: 11px;
+  padding: 11px;
   border-radius: 8px;
   border: 2px solid #1c1c1c;
   background-color: #f1e9cb;
@@ -77,4 +77,30 @@
   margin-top: 1rem;
   font-weight: 400;
   font-size: 13px;
+}
+
+@media screen and (max-width: 768px) {
+  .registerCon {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .registerCon form {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .registerCon {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .registerCon form {
+    width: 100%;
+  }
 }
